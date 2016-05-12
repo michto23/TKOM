@@ -1,23 +1,5 @@
-<!--<!DOCTYPE html lang='eng' aad>
-<div> 
-	<h1>jebac policje<h1> 
-</div>-->
+<script>
+    console.log("tesktsetsktkestksetks\"</scriptekt");
+    console.log("tesktsetsktkestksetksekt");
+</script>
 
-<!DOCTYPE html>
-<html lang='en'>
-<head>
-    <meta charset='UTF-8'>
-    <title>ala</title>
-</head>
-<style>
-  .ll {
-    color: red;
-  }
-</style>
-<body>
-<span> >  <.><><>>>>>class="ala<">s'<'uk"</span>
-<br>
-<span style= 'color:inherit'> > a/s<.><><>>>>>class='ala<'>s'<'uk'</span>
-<!--asdasd <rta>-->
-</body>
-</html>
