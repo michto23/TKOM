@@ -9,8 +9,9 @@ int comment_caller = 0;
 %x comment
 %x w_tag
 %x tresc_miedzy_tag
-%x w_wartosc_atrybutu_1
-%x w_wartosc_atrybutu_2
+%x wartosc_atrybutu_1
+%x wartosc_atrybutu_2
+%x w_skrypt
 
 ws      	[ \t\n]+
 slowo		[^ \t\n]+
@@ -48,12 +49,12 @@ doctype 	("<!DOCTYPE"|"<!doctype"){ws}"html"({slowo}|{ws})*">"
 						comment_caller = tresc_miedzy_tag;
 						BEGIN(comment);
 					}
-<w_wartosc_atrybutu_1>"<!--"	{
-						comment_caller = w_wartosc_atrybutu_1;
+<wartosc_atrybutu_1>"<!--"	{
+						comment_caller = wartosc_atrybutu_1;
 						BEGIN(comment);
 					}
-<w_wartosc_atrybutu_2>"<!--"	{
-						comment_caller = w_wartosc_atrybutu_2;
+<wartosc_atrybutu_2>"<!--"	{
+						comment_caller = wartosc_atrybutu_2;
 						BEGIN(comment);
 					}	
 					
@@ -64,21 +65,23 @@ doctype 	("<!DOCTYPE"|"<!doctype"){ws}"html"({slowo}|{ws})*">"
 
 
 
-
+<INITIAL>"<script>"							{BEGIN(w_skrypt);	cout << "poczatek skrypt - " << YYText() << '\n';}
 <INITIAL>{otw_tag}							{BEGIN(w_tag);	cout << "otw_tag - " << YYText() << '\n';}
 <w_tag>{atrybut} 							{if (yyleng!=1) yyless(yyleng-1);cout << "atrybut - " << YYText() << '\n';}
 <w_tag>{atrybut_bez_wart} 					{cout << "atrybut bez wartosci - " << YYText() << '\n';}
-<w_tag>{start_wartosc_atr_1} 				{BEGIN(w_wartosc_atrybutu_1);cout << "start wartosci atrybutu 1 - " << YYText() << '\n';}
-<w_tag>{start_wartosc_atr_2} 				{BEGIN(w_wartosc_atrybutu_2);cout << "start wartosci atrybutu 2 - " << YYText() << '\n';}
-<w_wartosc_atrybutu_1>{wartosc_atrybutu_1}	{if (yyleng!=1) yyless(yyleng-1);cout << "wartosc atrybutu 1 - " << YYText() << '\n';}			
-<w_wartosc_atrybutu_1>{cudzyslow_1} 			{BEGIN(w_tag);cout << "koniec wartosci atrybutu 1 - " << YYText() << '\n';} 
-<w_wartosc_atrybutu_2>{wartosc_atrybutu_2}	{if (yyleng!=1) yyless(yyleng-1);cout << "wartosc atrybutu 2 - " << YYText() << '\n';}			
-<w_wartosc_atrybutu_2>{cudzyslow_2} 			{BEGIN(w_tag);cout << "koniec wartosci atrybutu 2 - " << YYText() << '\n';}
-<w_tag>{zak_tag}							{BEGIN(INITIAL);cout << "koniec tag - " << YYText() << '\n';}		
-"<"								{cout << "znak wylaczony z tekstu - " << YYText() << '\n';}
-<w_tag>{zak_otw_tag}						{BEGIN(INITIAL); cout << "zak_otw_tag - " << YYText() << '\n';}	
+<w_tag>{start_wartosc_atr_1} 				{BEGIN(wartosc_atrybutu_1);cout << "start wartosci atrybutu 1 - " << YYText() << '\n';}
+<w_tag>{start_wartosc_atr_2} 				{BEGIN(wartosc_atrybutu_2);cout << "start wartosci atrybutu 2 - " << YYText() << '\n';}
+<wartosc_atrybutu_1>{wartosc_atrybutu_1}	{if (yyleng!=1) yyless(yyleng-1);cout << "wartosc atrybutu 1 - " << YYText() << '\n';}			
+<wartosc_atrybutu_1>{cudzyslow_1} 			{BEGIN(w_tag);cout << "koniec wartosci atrybutu 1 - " << YYText() << '\n';} 
+<wartosc_atrybutu_2>{wartosc_atrybutu_2}	{if (yyleng!=1) yyless(yyleng-1);cout << "wartosc atrybutu 2 - " << YYText() << '\n';}			
+<wartosc_atrybutu_2>{cudzyslow_2} 			{BEGIN(w_tag);cout << "koniec wartosci atrybutu 2 - " << YYText() << '\n';} 
+<w_tag>{zak_tag}							{BEGIN(INITIAL);cout << "koniec tag - " << YYText() << '\n';}
+<w_tag>{zak_otw_tag}						{BEGIN(INITIAL);cout << "koniec tag zak otw - " << YYText() << '\n';}
+<w_skrypt>"</script>"						{BEGIN(INITIAL);cout << "koniec skryptu - " << YYText() << '\n';}		
+"<"											{cout << "znak wylaczony z tekstu - " << YYText() << '\n';}	
+<w_skrypt>"<"								{cout << "znak wylaczony z tekstu - " << YYText() << '\n';}	
 <INITIAL>{otw_zak_tag}						{BEGIN(w_tag);	cout << "otw_zak_tag - " << YYText() << '\n';}
+<w_skrypt>{tekst}  							cout << "tekst w skrypcie to - " << YYText() << '\n';
 <INITIAL>{tekst}  							cout << "tekst to - " << YYText() << '\n';
 
 %%
-
