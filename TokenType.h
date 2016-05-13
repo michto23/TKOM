@@ -8,29 +8,27 @@
 #include <string>
 
 enum TokenType {
-    ScriptStart = 1,
-    ScriptKoniec,
-    ScriptText,
-    StartTag,
-    EndTag,
-    EndOnStartTag, // '/>'
-    StartOnEndTag, // '</{tagName}'
-    Attribute,
-    AttributeNoValue,
-    AttributeValueStartEqualsQuote,
-    AttributeValueStartEqualsQuotes,
-    AttributeValue,
-    AtrributeValueEndQuote,
-    AtrributeValueEndQuotes,
-    SpecialCharText, // eg. < , parser concats it with text before and after this char
-    Text
+    ScriptStart = 1,                // <script> , where script is non letter sensitive
+    ScriptEnd,                      // </script> , where script is non letter sensitive
+    StartTag,                       // <{tagName}
+    EndTag,                         // >
+    EndOnStartTag,                  // />
+    StartOnEndTag,                  // </{tagName}
+    Attribute,                      // name of attribute, eg. class
+    AttributeNoValue,               // name of atrribute with no value, such as html in !doctype
+    AttributeValueStartEqualsQuote, // '=
+    AttributeValueStartEqualsQuotes,// "=
+    AttributeValue,                 // everything between quotes after attribute
+    AtrributeValueEndQuote,         // '
+    AtrributeValueEndQuotes,        // "
+    SpecialCharText,                // eg. < , parser concats it with text, which is before and after this char
+    Text,                           // plain text with no '<' character
 };
 
-std::string getTokenName(int token) {
+inline std::string getTokenName(int token) {
     switch(token) {
         case ScriptStart:                       return "ScriptStart";
-        case ScriptKoniec:                      return "ScriptKoniec";
-        case ScriptText:                        return "ScriptText";
+        case ScriptEnd:                         return "ScriptEnd";
         case StartTag:                          return "StartTag";
         case EndTag:                            return "EndTag";
         case EndOnStartTag:                     return "EndOnStartTag";

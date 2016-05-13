@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <FlexLexer.h>
+#include "TokenType.h"
 
 
 int main( int argc, char** argv)
@@ -17,7 +18,14 @@ int main( int argc, char** argv)
     }
 
     FlexLexer* lexer = new yyFlexLexer(is);
-    while(lexer->yylex() != 0)
-        ;
+
+    while(true){
+        int token = lexer->yylex();
+        if(token == 0)
+            break;
+        std::cout<< "******" << getTokenName(token) <<"  ---->  " <<lexer->YYText() <<std::endl;
+    }
+
+
     return 0;
 }
