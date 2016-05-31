@@ -1,6 +1,6 @@
-#line 2 "/home/kuba/TKOM/TKOM/lex.yy.cc"
+#line 2 "/home/michto/Studia/TKOM/lex.yy.cc"
 
-#line 4 "/home/kuba/TKOM/TKOM/lex.yy.cc"
+#line 4 "/home/michto/Studia/TKOM/lex.yy.cc"
 
 #define  YY_INT_ALIGNED short int
 
@@ -9,7 +9,7 @@
 #define FLEX_SCANNER
 #define YY_FLEX_MAJOR_VERSION 2
 #define YY_FLEX_MINOR_VERSION 5
-#define YY_FLEX_SUBMINOR_VERSION 35
+#define YY_FLEX_SUBMINOR_VERSION 39
 #if YY_FLEX_SUBMINOR_VERSION > 0
 #define FLEX_BETA
 #endif
@@ -174,13 +174,19 @@ typedef unsigned int flex_uint32_t;
 typedef struct yy_buffer_state *YY_BUFFER_STATE;
 #endif
 
-extern int yyleng;
+#ifndef YY_TYPEDEF_YY_SIZE_T
+#define YY_TYPEDEF_YY_SIZE_T
+typedef size_t yy_size_t;
+#endif
+
+extern yy_size_t yyleng;
 
 #define EOB_ACT_CONTINUE_SCAN 0
 #define EOB_ACT_END_OF_FILE 1
 #define EOB_ACT_LAST_MATCH 2
 
     #define YY_LESS_LINENO(n)
+    #define YY_LINENO_REWIND_TO(ptr)
     
 /* Return all but the first "n" matched characters back to the input stream. */
 #define yyless(n) \
@@ -197,11 +203,6 @@ extern int yyleng;
 	while ( 0 )
 
 #define unput(c) yyunput( c, (yytext_ptr)  )
-
-#ifndef YY_TYPEDEF_YY_SIZE_T
-#define YY_TYPEDEF_YY_SIZE_T
-typedef size_t yy_size_t;
-#endif
 
 #ifndef YY_STRUCT_YY_BUFFER_STATE
 #define YY_STRUCT_YY_BUFFER_STATE
@@ -221,7 +222,7 @@ struct yy_buffer_state
 	/* Number of characters read into yy_ch_buf, not including EOB
 	 * characters.
 	 */
-	int yy_n_chars;
+	yy_size_t yy_n_chars;
 
 	/* Whether we "own" the buffer - i.e., we know we created it,
 	 * and can realloc() it to grow it, and should free() it to
@@ -334,8 +335,8 @@ int yyFlexLexer::yywrap() { return 1; }
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
 
-#define YY_NUM_RULES 24
-#define YY_END_OF_BUFFER 25
+#define YY_NUM_RULES 25
+#define YY_END_OF_BUFFER 26
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -345,15 +346,15 @@ struct yy_trans_info
 	};
 static yyconst flex_int16_t yy_accept[92] =
     {   0,
-       23,   23,    4,    4,    0,    0,    0,    0,    0,    0,
-       22,   22,   25,   23,    1,   19,    4,   24,    9,   24,
-        9,   24,   16,   24,   24,   13,   24,   24,   24,   15,
-       24,   22,   20,   23,    1,    0,    0,    7,    7,    4,
-        0,    9,    8,   17,    0,   11,   10,    0,    0,   12,
-        0,   13,   12,    0,    0,   14,    0,   15,   14,   22,
-        0,    0,    0,    0,   21,    7,    7,    5,    0,    0,
-        2,    0,   21,    7,    3,    0,    0,    7,    0,    0,
-        7,    0,    0,    7,    0,    0,    6,    0,    7,   18,
+       24,   24,    4,    4,    0,    0,    0,    0,    0,    0,
+       23,   23,   26,   24,    1,   20,    4,   25,   10,   25,
+       10,   25,   17,   25,   25,   14,   25,   25,   25,   16,
+       25,   23,   21,   24,    1,    0,    0,    8,    8,    4,
+        0,   10,    9,   18,    0,   12,   11,    0,    0,   13,
+        0,   14,   13,    0,    0,   15,    0,   16,   15,   23,
+        0,    0,    0,    0,   22,    8,    8,    5,    0,    0,
+        2,    0,   22,    8,    3,    0,    0,    8,    0,    0,
+        8,    0,    0,    8,    0,    0,    6,    0,    7,   19,
         0
 
     } ;
@@ -514,7 +515,7 @@ int comment_caller = 0;
 
 
 
-#line 518 "/home/kuba/TKOM/TKOM/lex.yy.cc"
+#line 519 "/home/michto/Studia/TKOM/lex.yy.cc"
 
 #define INITIAL 0
 #define comment 1
@@ -624,11 +625,6 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 39 "scan.y"
-
-
-#line 631 "/home/kuba/TKOM/TKOM/lex.yy.cc"
-
 	if ( !(yy_init) )
 		{
 		(yy_init) = 1;
@@ -655,6 +651,12 @@ YY_DECL
 		yy_load_buffer_state(  );
 		}
 
+	{
+#line 40 "scan.y"
+
+
+#line 659 "/home/michto/Studia/TKOM/lex.yy.cc"
+
 	while ( 1 )		/* loops until end-of-file is reached */
 		{
 		yy_cp = (yy_c_buf_p);
@@ -671,7 +673,7 @@ YY_DECL
 yy_match:
 		do
 			{
-			register YY_CHAR yy_c = yy_ec[YY_SC_TO_UI(*yy_cp)];
+			register YY_CHAR yy_c = yy_ec[YY_SC_TO_UI(*yy_cp)] ;
 			if ( yy_accept[yy_current_state] )
 				{
 				(yy_last_accepting_state) = yy_current_state;
@@ -713,12 +715,12 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 41 "scan.y"
+#line 42 "scan.y"
 { }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 43 "scan.y"
+#line 44 "scan.y"
 {
 						comment_caller = INITIAL;
 						BEGIN(comment);
@@ -726,7 +728,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 47 "scan.y"
+#line 48 "scan.y"
 {
 						comment_caller = w_skrypt;
 						BEGIN(comment);
@@ -735,116 +737,121 @@ YY_RULE_SETUP
 case 4:
 /* rule 4 can match eol */
 YY_RULE_SETUP
-#line 52 "scan.y"
+#line 53 "scan.y"
 /* eat anything that's not a '*' */
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 53 "scan.y"
+#line 54 "scan.y"
 BEGIN(comment_caller);
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 59 "scan.y"
+#line 60 "scan.y"
 {BEGIN(w_skrypt);                       return TokenType::ScriptStart;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 60 "scan.y"
-{BEGIN(w_tag);	                        return TokenType::StartTag;}
+#line 61 "scan.y"
+{BEGIN(w_tag);                          return TokenType::StartTagDoctype;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 61 "scan.y"
-{if (yyleng!=1) yyless(yyleng-1);       return TokenType::Attribute;}
+#line 62 "scan.y"
+{BEGIN(w_tag);	                        return TokenType::StartTag;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 62 "scan.y"
-{                                       return TokenType::AttributeNoValue;}
+#line 63 "scan.y"
+{if (yyleng!=1) yyless(yyleng-1);       return TokenType::Attribute;}
 	YY_BREAK
 case 10:
-/* rule 10 can match eol */
 YY_RULE_SETUP
-#line 63 "scan.y"
-{BEGIN(wartosc_atrybutu_1);             return TokenType::AttributeValueStartEqualsQuote;}
+#line 64 "scan.y"
+{                                       return TokenType::AttributeNoValue;}
 	YY_BREAK
 case 11:
 /* rule 11 can match eol */
 YY_RULE_SETUP
-#line 64 "scan.y"
-{BEGIN(wartosc_atrybutu_2);             return TokenType::AttributeValueStartEqualsQuotes;}
+#line 65 "scan.y"
+{BEGIN(wartosc_atrybutu_1);             return TokenType::AttributeValueStartEqualsQuote;}
 	YY_BREAK
 case 12:
-YY_RULE_SETUP
-#line 65 "scan.y"
-{if (yyleng!=1) yyless(yyleng-1);       return TokenType::AttributeValue;}
-	YY_BREAK
-case 13:
-/* rule 13 can match eol */
+/* rule 12 can match eol */
 YY_RULE_SETUP
 #line 66 "scan.y"
-{BEGIN(w_tag);                          return TokenType::AtrributeValueEndQuote;}
+{BEGIN(wartosc_atrybutu_2);             return TokenType::AttributeValueStartEqualsQuotes;}
 	YY_BREAK
-case 14:
+case 13:
 YY_RULE_SETUP
 #line 67 "scan.y"
 {if (yyleng!=1) yyless(yyleng-1);       return TokenType::AttributeValue;}
 	YY_BREAK
-case 15:
-/* rule 15 can match eol */
+case 14:
+/* rule 14 can match eol */
 YY_RULE_SETUP
 #line 68 "scan.y"
-{BEGIN(w_tag);                          return TokenType::AtrributeValueEndQuotes;}
+{BEGIN(w_tag);                          return TokenType::AtrributeValueEndQuote;}
 	YY_BREAK
-case 16:
+case 15:
 YY_RULE_SETUP
 #line 69 "scan.y"
-{BEGIN(INITIAL);                        return TokenType::EndTag;}
+{if (yyleng!=1) yyless(yyleng-1);       return TokenType::AttributeValue;}
+	YY_BREAK
+case 16:
+/* rule 16 can match eol */
+YY_RULE_SETUP
+#line 70 "scan.y"
+{BEGIN(w_tag);                          return TokenType::AtrributeValueEndQuotes;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 70 "scan.y"
-{BEGIN(INITIAL);                        return TokenType::EndOnStartTag;}
+#line 71 "scan.y"
+{BEGIN(INITIAL);                        return TokenType::EndTag;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 71 "scan.y"
-{BEGIN(INITIAL);                        return TokenType::ScriptEnd;}
+#line 72 "scan.y"
+{BEGIN(INITIAL);                        return TokenType::EndOnStartTag;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 72 "scan.y"
-{                                       return TokenType::SpecialCharText;}
+#line 73 "scan.y"
+{BEGIN(INITIAL);                        return TokenType::ScriptEnd;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 73 "scan.y"
+#line 74 "scan.y"
 {                                       return TokenType::SpecialCharText;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 74 "scan.y"
-{BEGIN(w_tag);	                        return TokenType::StartOnEndTag;}
+#line 75 "scan.y"
+{                                       return TokenType::SpecialCharText;}
 	YY_BREAK
 case 22:
-/* rule 22 can match eol */
 YY_RULE_SETUP
-#line 75 "scan.y"
-{                                       return TokenType::Text;}
+#line 76 "scan.y"
+{BEGIN(w_tag);	                        return TokenType::StartOnEndTag;}
 	YY_BREAK
 case 23:
 /* rule 23 can match eol */
 YY_RULE_SETUP
-#line 76 "scan.y"
+#line 77 "scan.y"
 {                                       return TokenType::Text;}
 	YY_BREAK
 case 24:
+/* rule 24 can match eol */
 YY_RULE_SETUP
 #line 78 "scan.y"
+{                                       return TokenType::Text;}
+	YY_BREAK
+case 25:
+YY_RULE_SETUP
+#line 80 "scan.y"
 ECHO;
 	YY_BREAK
-#line 848 "/home/kuba/TKOM/TKOM/lex.yy.cc"
+#line 855 "/home/michto/Studia/TKOM/lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(comment):
 case YY_STATE_EOF(w_tag):
@@ -980,6 +987,7 @@ case YY_STATE_EOF(w_skrypt):
 			"fatal flex scanner internal error--no action found" );
 	} /* end of action switch */
 		} /* end of scanning one token */
+	} /* end of user's declarations */
 } /* end of yylex */
 
 /* The contents of this function are C++ specific, so the () macro is not used.
@@ -1124,21 +1132,21 @@ int yyFlexLexer::yy_get_next_buffer()
 
 	else
 		{
-			int num_to_read =
+			yy_size_t num_to_read =
 			YY_CURRENT_BUFFER_LVALUE->yy_buf_size - number_to_move - 1;
 
 		while ( num_to_read <= 0 )
 			{ /* Not enough room in the buffer - grow it. */
 
 			/* just a shorter name for the current buffer */
-			YY_BUFFER_STATE b = YY_CURRENT_BUFFER;
+			YY_BUFFER_STATE b = YY_CURRENT_BUFFER_LVALUE;
 
 			int yy_c_buf_p_offset =
 				(int) ((yy_c_buf_p) - b->yy_ch_buf);
 
 			if ( b->yy_is_our_buffer )
 				{
-				int new_size = b->yy_buf_size * 2;
+				yy_size_t new_size = b->yy_buf_size * 2;
 
 				if ( new_size <= 0 )
 					b->yy_buf_size += b->yy_buf_size / 8;
@@ -1169,7 +1177,7 @@ int yyFlexLexer::yy_get_next_buffer()
 
 		/* Read in more data. */
 		YY_INPUT( (&YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[number_to_move]),
-			(yy_n_chars), (size_t) num_to_read );
+			(yy_n_chars), num_to_read );
 
 		YY_CURRENT_BUFFER_LVALUE->yy_n_chars = (yy_n_chars);
 		}
@@ -1264,7 +1272,7 @@ int yyFlexLexer::yy_get_next_buffer()
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
 	yy_is_jam = (yy_current_state == 91);
 
-	return yy_is_jam ? 0 : yy_current_state;
+		return yy_is_jam ? 0 : yy_current_state;
 }
 
     void yyFlexLexer::yyunput( int c, register char* yy_bp)
@@ -1279,7 +1287,7 @@ int yyFlexLexer::yy_get_next_buffer()
 	if ( yy_cp < YY_CURRENT_BUFFER_LVALUE->yy_ch_buf + 2 )
 		{ /* need to shift things up to make room */
 		/* +2 for EOB chars. */
-		register int number_to_move = (yy_n_chars) + 2;
+		register yy_size_t number_to_move = (yy_n_chars) + 2;
 		register char *dest = &YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[
 					YY_CURRENT_BUFFER_LVALUE->yy_buf_size + 2];
 		register char *source =
@@ -1322,7 +1330,7 @@ int yyFlexLexer::yy_get_next_buffer()
 
 		else
 			{ /* need more input */
-			int offset = (yy_c_buf_p) - (yytext_ptr);
+			yy_size_t offset = (yy_c_buf_p) - (yytext_ptr);
 			++(yy_c_buf_p);
 
 			switch ( yy_get_next_buffer(  ) )
@@ -1481,8 +1489,6 @@ int yyFlexLexer::yy_get_next_buffer()
 	yyfree((void *) b  );
 }
 
-extern "C" int isatty (int );
-
 /* Initializes or reinitializes a buffer.
  * This function is sometimes called more than once on the same buffer,
  * such as during a yyrestart() or at EOF.
@@ -1594,7 +1600,7 @@ void yyFlexLexer::yypop_buffer_state (void)
  */
 void yyFlexLexer::yyensure_buffer_stack(void)
 {
-	int num_to_alloc;
+	yy_size_t num_to_alloc;
     
 	if (!(yy_buffer_stack)) {
 
@@ -1749,7 +1755,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 78 "scan.y"
+#line 79 "scan.y"
 
 
 

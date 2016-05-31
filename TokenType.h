@@ -23,6 +23,8 @@ enum TokenType {
     AtrributeValueEndQuotes,        // "
     SpecialCharText,                // eg. < , parser concats it with text, which is before and after this char
     Text,                           // plain text with no '<' character
+    StartTagDoctype,                // <doctype (no match case)
+    StartTagVoid,                   // <br , etc. (with no end tag, void components)
 };
 
 inline std::string getTokenName(int token) {
@@ -42,6 +44,8 @@ inline std::string getTokenName(int token) {
         case AtrributeValueEndQuotes:           return "AtrributeValueEndQuotes";
         case SpecialCharText:                   return "SpecialCharText";
         case Text:                              return "Text";
+        case StartTagDoctype:                   return "StartTagDoctype";
+        case StartTagVoid:                      return "StartTagVoid";
         default:                                return "";
     }
 }

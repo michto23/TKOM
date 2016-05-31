@@ -7,7 +7,7 @@ find_package(FLEX)
 
 FLEX_TARGET(MyScanner scan.y  ${CMAKE_CURRENT_BINARY_DIR}/lex.yy.cc COMPILE_FLAGS -+)
 
-set(SOURCE_FILES main.cc TokenType.h)
+set(SOURCE_FILES main.cc TokenType.h token/Token.hpp parser/Parser.cpp parser/Parser.h treeObjects/HtmlDocument.h treeObjects/Doctype.h treeObjects/Component.h treeObjects/HtmlAttribute.h)
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 include_directories(${Project_SOURCE_DIR})

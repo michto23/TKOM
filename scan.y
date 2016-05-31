@@ -21,7 +21,8 @@ nazwa_taga	                [A-Za-z_][^ \t\n>]*
 atrybut_koncowy	            ([^ \t\n=>]+)">"
 atrybut	                    (([^ \t\n=>]+)[=])
 atrybut_bez_wart	        (([^ \t\n=>]+))
-otw_tag		                "<"({nazwa_taga}|{doctype_txt})
+otw_tag		                "<"{nazwa_taga}
+otw_tag_doctype             "<"{doctype_txt}
 zak_tag		                ">"
 cudzyslow_1	                [^(\')]*[']
 cudzyslow_2	                [^(\")]*["]
@@ -35,6 +36,7 @@ doctype 	                ("<!DOCTYPE"|"<!doctype"){ws}"html"({slowo}|{ws})*">"
 doctype_txt	                [!][Dd][Oo][Cc][Tt][Yy][Pp][Ee]
 script	                    [<][sS][cC][rR][iI][pP][tT][>]
 script_koniec	            [<][/][sS][cC][rR][iI][pP][tT][>]
+otw_tag_void                ([<][a][r][e][a])|([<][b][a][s][e])|([<][b][r])|([<][c][o][l])|([<][c][o][m][m][a][n][d])|([<][e][m][b][e][d])|([<][h][r])|([<][i][m][g])|([<][i][n][p][u][t])|([<][l][i][n][k])|([<][m][e][t][a])|([<][p][a][r][a][m])|([<][s][o][u][r][c][e])
 
 %%
 
@@ -57,6 +59,8 @@ script_koniec	            [<][/][sS][cC][rR][iI][pP][tT][>]
 
 
 <INITIAL>{script}							{BEGIN(w_skrypt);                       return TokenType::ScriptStart;}
+<INITIAL>{otw_tag_void}                     {BEGIN(w_tag);                          return TokenType::StartTagVoid;}
+<INITIAL>{otw_tag_doctype}                  {BEGIN(w_tag);                          return TokenType::StartTagDoctype;}
 <INITIAL>{otw_tag}							{BEGIN(w_tag);	                        return TokenType::StartTag;}
 <w_tag>{atrybut} 							{if (yyleng!=1) yyless(yyleng-1);       return TokenType::Attribute;}
 <w_tag>{atrybut_bez_wart} 					{                                       return TokenType::AttributeNoValue;}
