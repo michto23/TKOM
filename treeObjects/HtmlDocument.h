@@ -15,6 +15,23 @@ class HtmlDocument {
 private:
     std::vector<std::shared_ptr<Component>> components;
     std::shared_ptr<Doctype> doctype;
+public:
+
+    std::vector<std::shared_ptr<Component>> &getComponents() {
+        return components;
+    }
+
+    void setComponents(std::vector<std::shared_ptr<Component>> &components) {
+        HtmlDocument::components = components;
+    }
+
+    std::shared_ptr<Doctype> &getDoctype() {
+        return doctype;
+    }
+
+    void setDoctype(std::shared_ptr<Doctype> &doctype) {
+        HtmlDocument::doctype = doctype;
+    }
 };
 
 

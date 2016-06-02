@@ -12,6 +12,21 @@
 class Doctype {
 private:
     std::vector<std::shared_ptr<HtmlAttribute>> attributes;
+public:
+
+    std::vector<std::shared_ptr<HtmlAttribute>> &getAttributes() {
+        return attributes;
+    }
+
+    void setAttributes(const std::vector<std::shared_ptr<HtmlAttribute>> &attributes) {
+        Doctype::attributes = attributes;
+    }
+
+    void print(){
+        for(int i = 0; i < attributes.size(); ++i){
+            attributes.at(i).get()->print();
+        }
+    }
 };
 
 #endif //TKOM_DOCTYPE_H

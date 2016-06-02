@@ -5,4 +5,24 @@
 #ifndef TKOM_PARSER_H
 #define TKOM_PARSER_H
 
+#include <memory>
+#include "../token/Token.hpp"
+#include "../treeObjects/HtmlDocument.h"
+
+class Parser {
+private:
+    std::queue<std::shared_ptr<Token>>* tokens;
+    std::shared_ptr<Token> currentToken;
+    std::shared_ptr<Token> nextToken();
+public:
+    std::shared_ptr<HtmlDocument> buildHtmlDocumentTree();
+    std::shared_ptr<HtmlAttribute> buildHtmlAttribute();
+    std::shared_ptr<Component> buildComponent();
+
+
+    Parser(std::queue<std::shared_ptr<Token>> *tokens) : tokens(tokens) { }
+};
+
+
+
 #endif //TKOM_PARSER_H

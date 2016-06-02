@@ -1,6 +1,6 @@
 %{
 #include <iostream>
-#include "TokenType.h"
+#include "/home/michto/Studia/TKOM/TokenType.h"
 using namespace std;
 int mylineno = 0;
 int comment_caller = 0;
@@ -34,7 +34,7 @@ otw_zak_tag	                [<][/]{nazwa_taga}
 zak_otw_tag	                [/][>]
 doctype 	                ("<!DOCTYPE"|"<!doctype"){ws}"html"({slowo}|{ws})*">"
 doctype_txt	                [!][Dd][Oo][Cc][Tt][Yy][Pp][Ee]
-script	                    [<][sS][cC][rR][iI][pP][tT][>]
+script	                    [<][sS][cC][rR][iI][pP][tT][^<>]*[>]
 script_koniec	            [<][/][sS][cC][rR][iI][pP][tT][>]
 otw_tag_void                ([<][a][r][e][a])|([<][b][a][s][e])|([<][b][r])|([<][c][o][l])|([<][c][o][m][m][a][n][d])|([<][e][m][b][e][d])|([<][h][r])|([<][i][m][g])|([<][i][n][p][u][t])|([<][l][i][n][k])|([<][m][e][t][a])|([<][p][a][r][a][m])|([<][s][o][u][r][c][e])
 

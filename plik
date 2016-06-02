@@ -1,17 +1,5 @@
-<!doCtYpe html>
-<scrIpt>
-    console.log("t</scriptekt");
-    console.log("tesktsetsktkestksetksekt");
-</Script>
-<!--<tr>
-asfasfasfasf
-</tr>-->
-
-<div class="aaa" attr="red">
-asfasfas    <tr>
-                wnetrze
-                <td>
-                    wnetrze td
-                </td>
-            </tr>
-</div>
+<!doCtYpe html drugihtml style="color: red">
+<script src="/home/lll">
+    console.log("t<scriptekt");
+    console.log("tesktsetsktk</est>ksetksekt");
+</script>

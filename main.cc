@@ -3,14 +3,22 @@
 #include <FlexLexer.h>
 #include <vector>
 #include <memory>
-#include "TokenType.h"
+#include <queue>
+#include "/home/michto/Studia/TKOM/TokenType.h"
 #include "token/Token.hpp"
+#include "treeObjects/HtmlAttribute.h"
+#include "parser/Parser.h"
 
+std::shared_ptr<HtmlAttribute> nakurwe(){
+    std::shared_ptr<HtmlAttribute> retAtrribute(new HtmlAttribute);
+    retAtrribute.get()->setAttributeName(std::shared_ptr<Token>(new Token(Attribute)));
+    return retAtrribute;
+}
 
 int main( int argc, char** argv)
 {
 
-    std::vector<std::shared_ptr<Token>> tokens;
+    std::queue<std::shared_ptr<Token>> tokens;
 
     if(argc != 2) {
         return 1;
@@ -29,15 +37,38 @@ int main( int argc, char** argv)
         int token = lexer->yylex(); //return some token or 0 - EOF
         if(token == 0)
             break;
-        tokens.push_back(std::shared_ptr<Token>(new Token(lexer->YYText(), static_cast<TokenType>(token))));
+        if(token == Text || token == SpecialCharText){
+            std::string text = lexer->YYText();
+            token = lexer->yylex();
+            while (token == Text || token == SpecialCharText){
+                text.append(lexer->YYText());
+                token = lexer->yylex();
+            }
+            tokens.push(std::shared_ptr<Token>(new Token(text, Text)));
+        }
+        tokens.push(std::shared_ptr<Token>(new Token(lexer->YYText(), static_cast<TokenType>(token))));
 
 //        std::cout<< "******" << getTokenName(token) <<"  ---->  " <<lexer->YYText() <<std::endl; //read text from lexer yytext
     }
 
-    for (int i = 0; i < tokens.size(); ++i){
-        std::cout<< "******" << getTokenName(tokens.at(i).get()->getTokenType()) <<"  ---->  " <<tokens.at(i).get()->getValue() <<std::endl;
-    }
+//    std::queue<std::shared_ptr<Token>> tokens2(tokens);
 
+//    while (!tokens.empty())
+//    {
+//        std::cout<< "******" << getTokenName(tokens.front()->getTokenType()) <<"  ---->  " <<tokens.front().get()->getValue() <<std::endl;
+//        tokens.pop();
+//    }
+
+    Parser parser(&tokens);
+    parser.buildHtmlDocumentTree();
+
+//    std::shared_ptr<Token> startTag(new Token(StartTag));
+//    startTag.get()->setValue("pizda");
+//        std::string start = startTag.get()->getValue();
+//        start.append("asd");
+//
+//    std::cout<< "******" << startTag.get()->getValue() << std::endl;
+//    std::cout<< "******" << start << std::endl;
 
     return 0;
 }
