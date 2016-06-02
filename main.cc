@@ -9,12 +9,6 @@
 #include "treeObjects/HtmlAttribute.h"
 #include "parser/Parser.h"
 
-std::shared_ptr<HtmlAttribute> nakurwe(){
-    std::shared_ptr<HtmlAttribute> retAtrribute(new HtmlAttribute);
-    retAtrribute.get()->setAttributeName(std::shared_ptr<Token>(new Token(Attribute)));
-    return retAtrribute;
-}
-
 int main( int argc, char** argv)
 {
 
@@ -47,28 +41,22 @@ int main( int argc, char** argv)
             tokens.push(std::shared_ptr<Token>(new Token(text, Text)));
         }
         tokens.push(std::shared_ptr<Token>(new Token(lexer->YYText(), static_cast<TokenType>(token))));
-
 //        std::cout<< "******" << getTokenName(token) <<"  ---->  " <<lexer->YYText() <<std::endl; //read text from lexer yytext
     }
 
-//    std::queue<std::shared_ptr<Token>> tokens2(tokens);
-
+//    long id = 0;
 //    while (!tokens.empty())
 //    {
-//        std::cout<< "******" << getTokenName(tokens.front()->getTokenType()) <<"  ---->  " <<tokens.front().get()->getValue() <<std::endl;
+//        std::cout<<  id << " ****** " << getTokenName(tokens.front()->getTokenType()) <<"  ---->  " <<tokens.front().get()->getValue() <<std::endl;
 //        tokens.pop();
+//        if (id == 2503){
+//            break;
+//        }
+//        ++id;
 //    }
 
     Parser parser(&tokens);
     parser.buildHtmlDocumentTree();
-
-//    std::shared_ptr<Token> startTag(new Token(StartTag));
-//    startTag.get()->setValue("pizda");
-//        std::string start = startTag.get()->getValue();
-//        start.append("asd");
-//
-//    std::cout<< "******" << startTag.get()->getValue() << std::endl;
-//    std::cout<< "******" << start << std::endl;
 
     return 0;
 }

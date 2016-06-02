@@ -13,7 +13,8 @@ class Parser {
 private:
     std::queue<std::shared_ptr<Token>>* tokens;
     std::shared_ptr<Token> currentToken;
-    std::shared_ptr<Token> nextToken();
+    long posCurrToken = 0;
+    std::shared_ptr<Token> nextToken(bool);
 public:
     std::shared_ptr<HtmlDocument> buildHtmlDocumentTree();
     std::shared_ptr<HtmlAttribute> buildHtmlAttribute();

@@ -22,48 +22,32 @@
  * Attribute := _AttributeNoValue
  */
 
-/*
- *     <area >
-    <base>
-    <br>
-    <col>
-    <command>
-    <embed>
-    <hr>
-    <img>
-    <input>
-    <link>
-    <meta>
-    <param>
-    <source>
-    To exclude
- */
-
 std::shared_ptr<HtmlDocument> Parser::buildHtmlDocumentTree(){
-    std::shared_ptr<HtmlDocument> htmlDocument(new HtmlDocument);
-    currentToken = Parser::nextToken();
+    std::shared_ptr<HtmlDocument> htmlDocument(new HtmlDocument);/*
+    currentToken = Parser::nextToken(false);
     if(currentToken == NULL)
         return NULL;
     if(currentToken.get()->getTokenType() == StartTagDoctype){
         std::shared_ptr<Doctype> doctype(new Doctype);
-        currentToken = Parser::nextToken();
+        currentToken = Parser::nextToken(false);
         while (currentToken.get()->getTokenType() == AttributeNoValue || currentToken.get()->getTokenType() == Attribute) {
             doctype.get()->getAttributes().push_back(buildHtmlAttribute());
-            currentToken = Parser::nextToken();
+            currentToken = Parser::nextToken(false);
         }
         if (currentToken.get()->getTokenType() == EndTag){
-            doctype.get()->print();
+//            doctype.get()->print();
             htmlDocument.get()->setDoctype(doctype);
-            currentToken = Parser::nextToken();
-            while (currentToken.get()->getTokenType() == StartTag || currentToken.get()->getTokenType() == StartTagVoid || currentToken.get()->getTokenType() == ScriptStart || currentToken.get()->getTokenType() == Text){
+            currentToken = Parser::nextToken(true);
+            while (currentToken.get() != NULL && (currentToken.get()->getTokenType() == StartTag || currentToken.get()->getTokenType() == StartTagVoid || currentToken.get()->getTokenType() == ScriptStart || currentToken.get()->getTokenType() == Text)){
                 htmlDocument.get()->getComponents().push_back(buildComponent());
-                currentToken = Parser::nextToken();
+                currentToken = Parser::nextToken(true);
             }
+            return htmlDocument;
         }
     }
 
-
-    return nullptr;
+    std::cout<< "ERROR PARSOWANIA " << currentToken.get()->getValue() <<" ** " << posCurrToken << std::endl;
+    exit(posCurrToken);
 }
 
 std::shared_ptr<HtmlAttribute> Parser::buildHtmlAttribute(){
@@ -73,30 +57,30 @@ std::shared_ptr<HtmlAttribute> Parser::buildHtmlAttribute(){
         return retAtrribute;
     }
     else if(currentToken.get()->getTokenType() == Attribute){
-        currentToken = Parser::nextToken();
+        currentToken = Parser::nextToken(false);
         if (currentToken.get()->getTokenType() == AttributeValueStartEqualsQuote){
-            currentToken = Parser::nextToken();
+            currentToken = Parser::nextToken(false);
             if(currentToken.get()->getTokenType() == AttributeValue){
                 retAtrribute.get()->setAttributeValue(currentToken);
-                currentToken = Parser::nextToken();
+                currentToken = Parser::nextToken(false);
                 if(currentToken.get()->getTokenType() == AtrributeValueEndQuote){
                     return retAtrribute;
                 }
             }
         }
         else if (currentToken.get()->getTokenType() == AttributeValueStartEqualsQuotes){
-            currentToken = Parser::nextToken();
+            currentToken = Parser::nextToken(false);
             if(currentToken.get()->getTokenType() == AttributeValue){
                 retAtrribute.get()->setAttributeValue(currentToken);
-                currentToken = Parser::nextToken();
+                currentToken = Parser::nextToken(false);
                 if(currentToken.get()->getTokenType() == AtrributeValueEndQuotes){
                     return retAtrribute;
                 }
             }
         }
     }
-    return NULL;
-    //exception
+    std::cout<< "ERROR PARSOWANIA " << currentToken.get()->getValue() <<" ** " << posCurrToken << std::endl;
+    exit(posCurrToken);
 }
 
 std::shared_ptr<Component> Parser::buildComponent(){
@@ -108,10 +92,10 @@ std::shared_ptr<Component> Parser::buildComponent(){
     }
     else if(currentToken.get()->getTokenType() == ScriptStart){
         retComponent.get()->setStartTag(currentToken);
-        currentToken = Parser::nextToken();
+        currentToken = Parser::nextToken(false);
         if (currentToken.get()->getTokenType() == Text) { // dla startaga dojdzie jeszcze reszta
             retComponent.get()->getComponents().push_back(buildComponent()); //zbuduj komponent tekstu - tego co pomiedzy <s.. </s..
-            currentToken = Parser::nextToken();
+            currentToken = Parser::nextToken(false);
         }
         if (currentToken.get()->getTokenType() == ScriptEnd){
             return retComponent;
@@ -119,19 +103,19 @@ std::shared_ptr<Component> Parser::buildComponent(){
     }
     else if(currentToken.get()->getTokenType() == StartTag){
         retComponent.get()->setStartTag(currentToken);
-        currentToken = Parser::nextToken();
+        currentToken = Parser::nextToken(false);
         while (currentToken.get()->getTokenType() == AttributeNoValue || currentToken.get()->getTokenType() == Attribute) {
             retComponent.get()->getAttributes().push_back(buildHtmlAttribute());
-            currentToken = Parser::nextToken();
+            currentToken = Parser::nextToken(false);
         }
         if (currentToken.get()->getTokenType() == EndTag){
-            currentToken = Parser::nextToken();
+            currentToken = Parser::nextToken(false);
             while (currentToken.get()->getTokenType() == StartTag || currentToken.get()->getTokenType() == StartTagVoid || currentToken.get()->getTokenType() == ScriptStart || currentToken.get()->getTokenType() == Text) { // dla startaga dojdzie jeszcze reszta
                 retComponent.get()->getComponents().push_back(buildComponent()); //zbuduj komponent tekstu - tego co pomiedzy <s.. </s..
-                currentToken = Parser::nextToken();
+                currentToken = Parser::nextToken(false);
             }
             if (currentToken.get()->getTokenType() == StartOnEndTag && retComponent.get()->compareStartAndEndTag(currentToken)){
-                currentToken = Parser::nextToken();
+                currentToken = Parser::nextToken(false);
                 if (currentToken.get()->getTokenType() == EndTag){
                     return retComponent;
                 }
@@ -143,10 +127,10 @@ std::shared_ptr<Component> Parser::buildComponent(){
     }
     else if(currentToken.get()->getTokenType() == StartTagVoid){
         retComponent.get()->setStartTag(currentToken);
-        currentToken = Parser::nextToken();
+        currentToken = Parser::nextToken(false);
         while (currentToken.get()->getTokenType() == AttributeNoValue || currentToken.get()->getTokenType() == Attribute) {
             retComponent.get()->getAttributes().push_back(buildHtmlAttribute());
-            currentToken = Parser::nextToken();
+            currentToken = Parser::nextToken(false);
         }
         if (currentToken.get()->getTokenType() == EndTag){
             return retComponent;
@@ -155,13 +139,22 @@ std::shared_ptr<Component> Parser::buildComponent(){
             return retComponent; //tag samozamykajacy sie
         }
     }
+    std::cout<< "ERROR PARSOWANIA " << currentToken.get()->getValue() <<" ** " << posCurrToken << std::endl;
+    exit(posCurrToken);
 }
 
-std::shared_ptr<Token> Parser::nextToken(){
+std::shared_ptr<Token> Parser::nextToken(bool isPossibleEnd){
     if (!tokens->empty()){
         std::shared_ptr<Token> retToken = tokens->front();
+        posCurrToken++;
         tokens->pop();
         return retToken;
     }
-    return NULL;
+    if (isPossibleEnd){
+        return NULL;
+    }
+    else{
+        std::cout<< "ERROR PARSOWANIA. KONIEC TOKENOW W NIEODPOWIEDNIM MOMENCIE" << std::endl;
+        exit(posCurrToken);
+    }
 }
