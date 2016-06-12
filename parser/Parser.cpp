@@ -6,6 +6,7 @@
 #include "Parser.h"
 #include "../treeObjects/HtmlDocument.hpp"
 #include "../token/Token.hpp"
+#include "../exception/PerrorException.hpp"
 
 /*
  *  _Classes - the way to mark Token Enums - terminate symbols
@@ -35,7 +36,6 @@ std::shared_ptr<HtmlDocument> Parser::buildHtmlDocumentTree(){
             currentToken = Parser::nextToken(false);
         }
         if (currentToken.get()->getTokenType() == EndTag){
-//            doctype.get()->print();
             htmlDocument.get()->setDoctype(doctype);
             currentToken = Parser::nextToken(true);
             while (currentToken.get() != NULL && (currentToken.get()->getTokenType() == StartTag || currentToken.get()->getTokenType() == StartTagVoid || currentToken.get()->getTokenType() == ScriptStart || currentToken.get()->getTokenType() == Text)){
@@ -45,9 +45,7 @@ std::shared_ptr<HtmlDocument> Parser::buildHtmlDocumentTree(){
             return htmlDocument;
         }
     }
-
-    std::cout<< "ERROR PARSOWANIA " << currentToken.get()->getValue() <<" ** " << posCurrToken << std::endl;
-    exit(posCurrToken);
+    throw PerrorException( "ERROR PARSOWANIA w buildHtmlDocumentTree tokenu nr \n" + posCurrToken);
 }
 
 std::shared_ptr<HtmlAttribute> Parser::buildHtmlAttribute(){
@@ -79,8 +77,7 @@ std::shared_ptr<HtmlAttribute> Parser::buildHtmlAttribute(){
             }
         }
     }
-    std::cout<< "ERROR PARSOWANIA " << currentToken.get()->getValue() <<" ** " << posCurrToken << std::endl;
-    exit(posCurrToken);
+    throw PerrorException( "ERROR PARSOWANIA tokenu w buildHtmlAttribute nr \n" + posCurrToken);
 }
 
 std::shared_ptr<Component> Parser::buildComponent(){
@@ -139,8 +136,7 @@ std::shared_ptr<Component> Parser::buildComponent(){
             return retComponent; //tag samozamykajacy sie
         }
     }
-    std::cout<< "ERROR PARSOWANIA " << currentToken.get()->getValue() <<" ** " << posCurrToken << std::endl;
-    exit(posCurrToken);
+    throw PerrorException( "ERROR PARSOWANIA w buildComponent tokenu nr \n" + posCurrToken);
 }
 
 std::shared_ptr<Token> Parser::nextToken(bool isPossibleEnd){
@@ -154,16 +150,10 @@ std::shared_ptr<Token> Parser::nextToken(bool isPossibleEnd){
         return NULL;
     }
     else{
-        std::cout<< "ERROR PARSOWANIA. KONIEC TOKENOW W NIEODPOWIEDNIM MOMENCIE" << std::endl;
-        exit(posCurrToken);
+        throw PerrorException( "ERROR PARSOWANIA. KONIEC TOKENOW W NIEODPOWIEDNIM MOMENCIE \n" + posCurrToken);
     }
 }
 
-
-/*
- * Search component with given tag token
- * @return list of found components
- */
 std::vector<std::shared_ptr<Component>> Parser::findComponents(std::shared_ptr<Component> component, Token startTag){
 
     std::vector<std::shared_ptr<Component>> found;

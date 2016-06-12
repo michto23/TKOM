@@ -10,6 +10,7 @@
 #include <algorithm>
 #include "../json/json.h"
 #include "../json/json-forwards.h"
+#define NONE_FILTER_TXT "none"
 
 class MalwrDTO {
 private:

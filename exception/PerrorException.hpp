@@ -10,8 +10,7 @@
 
 #endif //TKOM_PERROREXCEPTION_H
 
-class PerrorException : public std::exception
-{
+class PerrorException : public std::exception {
 private:
     std::string errorMsg;
 public:

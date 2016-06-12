@@ -4,6 +4,8 @@
 
 #ifndef TKOM_MALWRANALYZER_H
 #define TKOM_MALWRANALYZER_H
+#define TR_TOKEN_VALUE "<tr"
+#define OUTPUT_JSON_FILE "outputJson.json"
 
 
 #include <memory>
@@ -18,6 +20,7 @@ private:
     std::vector<std::shared_ptr<MalwrDTO>> malwrDTOs;
     std::shared_ptr<Parser> parser;
     std::shared_ptr<HtmlDocument> htmlDocument;
+
 public:
     MalwrAnalyzer(std::shared_ptr<Parser> &parser) : parser(parser) { }
     void buildHtmlDocumentTree ();

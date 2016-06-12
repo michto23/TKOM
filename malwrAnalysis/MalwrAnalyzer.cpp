@@ -3,6 +3,7 @@
 //
 
 #include "MalwrAnalyzer.h"
+#include "../exception/PerrorException.hpp"
 
 void MalwrAnalyzer::buildHtmlDocumentTree () {
     htmlDocument = parser.get()->buildHtmlDocumentTree();
@@ -42,15 +43,13 @@ std::shared_ptr<MalwrDTO> MalwrAnalyzer::createMalwrDTO (std::shared_ptr<Compone
 }
 
 void MalwrAnalyzer::findMalwrDTOComponents() {
-    Token token("<tr", StartTag);
+    Token token(TR_TOKEN_VALUE, StartTag);
     std::vector<std::shared_ptr<Component>> result = parser.get()->findComponentsInDocument(htmlDocument, token);
-    std::cout << "sprawdz size" <<result.size() << std::endl;
     for (int i = 0; i < result.size(); ++i) {
         if (i != 0){
             malwrDTOs.push_back(createMalwrDTO(result.at(i)));
         }
     }
-    std::cout << "sprawdz malwrtDTO size " <<malwrDTOs.size() << std::endl;
 }
 
 std::vector<std::shared_ptr<MalwrDTO>> MalwrAnalyzer::filterMalwrDTOs(char **argv){
@@ -69,17 +68,24 @@ std::vector<std::shared_ptr<MalwrDTO>> MalwrAnalyzer::filterMalwrDTOs(char **arg
 }
 
 void MalwrAnalyzer::runMalwrAnalyzer(char **argv){
-    buildHtmlDocumentTree();
+    try {
+        buildHtmlDocumentTree();
+    }
+    catch (PerrorException &e){
+        std::cout << "Error buildHtmlDocumentTree " << std::endl;
+        std::cout << e.getErrorMsg() << std::endl;
+        exit(-1);
+    }
+    std::cout << "Parser tree - sukces " << std::endl;
+
     findMalwrDTOComponents();
     std::vector<std::shared_ptr<MalwrDTO>> filteredMalwrDTOs = filterMalwrDTOs(argv);
-    std::cout << "size tego filtrowanego to " << filteredMalwrDTOs.size() << std::endl;
 
     std::ofstream outputJson;
-    outputJson.open ("outputJson.json");
+    outputJson.open (OUTPUT_JSON_FILE);
     outputJson << "[";
 
     for (int i = 0; i < filteredMalwrDTOs.size(); ++i) {
-        filteredMalwrDTOs.at(i).get()->toJSON();
         outputJson << filteredMalwrDTOs.at(i).get()->toJSON();
         if (i != filteredMalwrDTOs.size() - 1){
             outputJson << ",";
