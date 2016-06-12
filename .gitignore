@@ -1,0 +1,11 @@
+# Created by .ignore support plugin (hsz.mobi)
+.gitignore
+.idea/
+Analizator
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+logMalwrCom - numerated tokens
+logMalwrCom - numerated tokens~
+temp.h

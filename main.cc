@@ -8,6 +8,8 @@
 #include "token/Token.hpp"
 #include "treeObjects/HtmlAttribute.h"
 #include "parser/Parser.h"
+#include "malwrAnalysis/MalwrDTO.h"
+#include "malwrAnalysis/MalwrAnalyzer.h"
 
 int main( int argc, char** argv)
 {
@@ -55,8 +57,40 @@ int main( int argc, char** argv)
 //        ++id;
 //    }
 
-    Parser parser(&tokens);
-    parser.buildHtmlDocumentTree();
+//    Parser parser(&tokens);
+//    std::shared_ptr<HtmlDocument> htmlDocument = parser.buildHtmlDocumentTree();
+//    Token token1("<tr", StartTag);
+//    parser.findComponentsInDocument(htmlDocument, token1);
+
+
+
+//    std::cout<< "aaaaaaaaaaaaaa" << std::endl;
+//    std::cout<< htmlDocument.get()->getComponents().at(0).get()->getComponents().size() << std::endl;
+
+//MalwrDTO malwrDTO;
+
+
+//    struct tm tm;
+//    "June 11, 2016, 12:21 p.m.";
+//
+//
+//    if (strptime("June 11, 2016, 01:21 PM", "%b %d, %Y, %I:%M %p", &tm) == NULL){
+//        printf("eror na suke");
+//    }
+//        /* Handle error */;
+//
+//    printf("year: %d; month: %d; day: %d;\n",
+//           tm.tm_year, tm.tm_mon, tm.tm_mday);
+//    tm.tm_sec = 0;
+//    printf("hour: %d; minute: %d; second: %d\n",
+//           tm.tm_hour, tm.tm_min, tm.tm_sec);
+
+//    Parser parser(&tokens);
+    std::shared_ptr<Parser> parserPtr = std::shared_ptr<Parser>(new Parser(&tokens));
+    MalwrAnalyzer malwrAnalyzer(parserPtr);
+    malwrAnalyzer.buildHtmlDocumentTree();
+    malwrAnalyzer.findMalwrDTOComponents();
+
 
     return 0;
 }

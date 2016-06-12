@@ -23,7 +23,7 @@
  */
 
 std::shared_ptr<HtmlDocument> Parser::buildHtmlDocumentTree(){
-    std::shared_ptr<HtmlDocument> htmlDocument(new HtmlDocument);/*
+    std::shared_ptr<HtmlDocument> htmlDocument(new HtmlDocument);
     currentToken = Parser::nextToken(false);
     if(currentToken == NULL)
         return NULL;
@@ -157,4 +157,40 @@ std::shared_ptr<Token> Parser::nextToken(bool isPossibleEnd){
         std::cout<< "ERROR PARSOWANIA. KONIEC TOKENOW W NIEODPOWIEDNIM MOMENCIE" << std::endl;
         exit(posCurrToken);
     }
+}
+
+
+/*
+ * Search component with given tag token
+ * @return list of found components
+ */
+std::vector<std::shared_ptr<Component>> findComponents(std::shared_ptr<Component> component, Token startTag){
+
+    std::vector<std::shared_ptr<Component>> found;
+    if (component.get()->getStartTag() == NULL){
+        std::cout << " tekst to " << component.get()->getText().get()->getValue() << std::endl;
+        return found;
+    }
+    else {
+        std::cout << component.get()->getStartTag().get()->getValue() << " ";
+        std::cout << component.get()->getComponents().size() << std::endl;
+    }
+    if (component.get()->getStartTag().get()->getValue() == startTag.getValue() && component.get()->getStartTag().get()->getTokenType() == startTag.getTokenType()){
+        found.push_back(component);
+    }
+    for (int i = 0; i < component.get()->getComponents().size(); ++i) {
+        std::vector<std::shared_ptr<Component>> recursiveFound = findComponents(component.get()->getComponents().at(i), startTag);
+        found.insert(found.end(), recursiveFound.begin(), recursiveFound.end());
+    }
+    return found;
+}
+
+std::vector<std::shared_ptr<Component>> Parser::findComponentsInDocument(std::shared_ptr<HtmlDocument> document, Token startTag){
+    std::vector<std::shared_ptr<Component>> found;
+    for (int i = 0; i < document.get()->getComponents().size(); ++i) {
+        found = findComponents(document.get()->getComponents().at(i), startTag);
+        std::cout<< "to ";
+        std::cout<< found.size() << std::endl;
+    }
+    return found;
 }

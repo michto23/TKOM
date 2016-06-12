@@ -19,7 +19,7 @@ public:
     std::shared_ptr<HtmlDocument> buildHtmlDocumentTree();
     std::shared_ptr<HtmlAttribute> buildHtmlAttribute();
     std::shared_ptr<Component> buildComponent();
-
+    std::vector<std::shared_ptr<Component>> findComponentsInDocument(std::shared_ptr<HtmlDocument> document, Token startTag);
 
     Parser(std::queue<std::shared_ptr<Token>> *tokens) : tokens(tokens) { }
 };
