@@ -4,7 +4,7 @@
 
 #include <queue>
 #include "Parser.h"
-#include "../treeObjects/HtmlDocument.h"
+#include "../treeObjects/HtmlDocument.hpp"
 #include "../token/Token.hpp"
 
 /*
@@ -168,12 +168,7 @@ std::vector<std::shared_ptr<Component>> Parser::findComponents(std::shared_ptr<C
 
     std::vector<std::shared_ptr<Component>> found;
     if (component.get()->getStartTag() == NULL){
-//        std::cout << " tekst to " << component.get()->getText().get()->getValue() << std::endl;
         return found;
-    }
-    else {
-//        std::cout << component.get()->getStartTag().get()->getValue() << " ";
-//        std::cout << component.get()->getComponents().size() << std::endl;
     }
     if (component.get()->getStartTag().get()->getValue() == startTag.getValue() && component.get()->getStartTag().get()->getTokenType() == startTag.getTokenType()){
         found.push_back(component);
@@ -189,8 +184,6 @@ std::vector<std::shared_ptr<Component>> Parser::findComponentsInDocument(std::sh
     std::vector<std::shared_ptr<Component>> found;
     for (int i = 0; i < document.get()->getComponents().size(); ++i) {
         found = findComponents(document.get()->getComponents().at(i), startTag);
-        std::cout<< "to ";
-        std::cout<< found.size() << std::endl;
     }
     return found;
 }

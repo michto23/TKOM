@@ -7,7 +7,7 @@
 
 
 #include <string>
-#include "../TokenType.h"
+#include "TokenType.h"
 
 class Token {
 private:

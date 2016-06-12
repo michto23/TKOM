@@ -4,9 +4,9 @@
 #include <vector>
 #include <memory>
 #include <queue>
-#include "/home/michto/Studia/TKOM/TokenType.h"
+#include "token/TokenType.h"
 #include "token/Token.hpp"
-#include "treeObjects/HtmlAttribute.h"
+#include "treeObjects/HtmlAttribute.hpp"
 #include "parser/Parser.h"
 #include "malwrAnalysis/MalwrDTO.h"
 #include "malwrAnalysis/MalwrAnalyzer.h"

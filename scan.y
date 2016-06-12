@@ -1,6 +1,6 @@
 %{
 #include <iostream>
-#include "/home/michto/Studia/TKOM/TokenType.h"
+#include "/home/michto/Studia/TKOM/token/TokenType.h"
 using namespace std;
 int mylineno = 0;
 int comment_caller = 0;

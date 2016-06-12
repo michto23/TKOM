@@ -544,7 +544,7 @@ static yyconst flex_int16_t yy_chk[367] =
 #line 1 "scan.y"
 #line 2 "scan.y"
 #include <iostream>
-#include "/home/michto/Studia/TKOM/TokenType.h"
+#include "token/TokenType.h"
 using namespace std;
 int mylineno = 0;
 int comment_caller = 0;

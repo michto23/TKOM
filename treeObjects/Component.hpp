@@ -8,8 +8,8 @@
 
 #include <memory>
 #include <vector>
-#include "../TokenType.h"
-#include "HtmlAttribute.h"
+#include "../token/TokenType.h"
+#include "HtmlAttribute.hpp"
 
 class Component {
 private:

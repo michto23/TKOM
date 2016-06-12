@@ -8,12 +8,6 @@
 
 std::queue<std::shared_ptr<Token>> Scanner::scanDocument(char** argv) {
 
-    std::cout << argv[0] << std::endl;
-    std::cout << argv[1] << std::endl;
-    std::cout << argv[2] << std::endl;
-    std::cout << argv[3] << std::endl;
-    std::cout << argv[4] << std::endl;
-
     std::queue<std::shared_ptr<Token>> tokens;
 
     std::filebuf fb;
@@ -39,7 +33,6 @@ std::queue<std::shared_ptr<Token>> Scanner::scanDocument(char** argv) {
             tokens.push(std::shared_ptr<Token>(new Token(text, Text)));
         }
         tokens.push(std::shared_ptr<Token>(new Token(lexer->YYText(), static_cast<TokenType>(token))));
-
     }
 
     return tokens;

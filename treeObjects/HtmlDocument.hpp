@@ -8,8 +8,8 @@
 
 #include <memory>
 #include <vector>
-#include "Component.h"
-#include "Doctype.h"
+#include "Component.hpp"
+#include "Doctype.hpp"
 
 class HtmlDocument {
 private:

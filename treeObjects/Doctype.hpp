@@ -7,7 +7,7 @@
 
 #include <memory>
 #include <vector>
-#include "HtmlAttribute.h"
+#include "HtmlAttribute.hpp"
 
 class Doctype {
 private:
@@ -20,12 +20,6 @@ public:
 
     void setAttributes(const std::vector<std::shared_ptr<HtmlAttribute>> &attributes) {
         Doctype::attributes = attributes;
-    }
-
-    void print(){
-        for(int i = 0; i < attributes.size(); ++i){
-            attributes.at(i).get()->print();
-        }
     }
 };
 

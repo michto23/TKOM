@@ -6,7 +6,7 @@
 #define TKOM_ATTRIBUTE_H
 
 #include <iostream>
-#include "../TokenType.h"
+#include "../token/TokenType.h"
 
 class HtmlAttribute {
 private:
@@ -29,19 +29,6 @@ public:
     void setAttributeName(std::shared_ptr<Token> attributeName) {
         HtmlAttribute::attributeName = attributeName;
     }
-
-    void print() {
-        std::cout << "****"<< std::endl;
-        if(attributeName.get() != NULL){
-            std::cout << "AttrNameEnum - " << getTokenName(attributeName.get()->getTokenType()) << std::endl;
-            std::cout << "AttrNameValue - " << attributeName.get()->getValue() << std::endl << std::endl;
-        }
-        if(attributeValue.get() != NULL){
-            std::cout << "AttrValueEnum - " << getTokenName(attributeValue.get()->getTokenType()) << std::endl;
-            std::cout << "AttrValueValue - " << attributeValue.get()->getValue() << std::endl << std::endl;
-        }
-        std::cout << "****"<< std::endl;
-    };
 };
 
 
