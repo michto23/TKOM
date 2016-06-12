@@ -10,41 +10,42 @@
 #include "parser/Parser.h"
 #include "malwrAnalysis/MalwrDTO.h"
 #include "malwrAnalysis/MalwrAnalyzer.h"
+#include "scanner/Scanner.h"
 
 int main( int argc, char** argv)
 {
 
-    std::queue<std::shared_ptr<Token>> tokens;
 
-    if(argc != 2) {
-        return 1;
-    }
 
-    std::filebuf fb;
-    std::istream* is;
+//    std::filebuf fb;
+//    std::istream* is;
+//
+//    if (fb.open (argv[1] ,std::ios::in)) {
+//        is = new std::istream(&fb);
+//    }
+//
+//    FlexLexer* lexer = new yyFlexLexer(is);
+//
+//    while(true){
+//        int token = lexer->yylex(); //return some token or 0 - EOF
+//        if(token == 0)
+//            break;
+//        if(token == Text || token == SpecialCharText){
+//            std::string text = lexer->YYText();
+//            token = lexer->yylex();
+//            while (token == Text || token == SpecialCharText){
+//                text.append(lexer->YYText());
+//                token = lexer->yylex();
+//            }
+//            tokens.push(std::shared_ptr<Token>(new Token(text, Text)));
+//        }
+//        tokens.push(std::shared_ptr<Token>(new Token(lexer->YYText(), static_cast<TokenType>(token))));
 
-    if (fb.open (argv[1] ,std::ios::in)) {
-        is = new std::istream(&fb);
-    }
 
-    FlexLexer* lexer = new yyFlexLexer(is);
 
-    while(true){
-        int token = lexer->yylex(); //return some token or 0 - EOF
-        if(token == 0)
-            break;
-        if(token == Text || token == SpecialCharText){
-            std::string text = lexer->YYText();
-            token = lexer->yylex();
-            while (token == Text || token == SpecialCharText){
-                text.append(lexer->YYText());
-                token = lexer->yylex();
-            }
-            tokens.push(std::shared_ptr<Token>(new Token(text, Text)));
-        }
-        tokens.push(std::shared_ptr<Token>(new Token(lexer->YYText(), static_cast<TokenType>(token))));
+
 //        std::cout<< "******" << getTokenName(token) <<"  ---->  " <<lexer->YYText() <<std::endl; //read text from lexer yytext
-    }
+//    }
 
 //    long id = 0;
 //    while (!tokens.empty())
@@ -86,10 +87,23 @@ int main( int argc, char** argv)
 //           tm.tm_hour, tm.tm_min, tm.tm_sec);
 
 //    Parser parser(&tokens);
+
+    std::queue<std::shared_ptr<Token>> tokens;
+
+    if(argc != 5) {
+        printf("pizda\n");
+        return 1;
+    }
+
+    Scanner scanner;
+    tokens = scanner.scanDocument(argv);
+
+
     std::shared_ptr<Parser> parserPtr = std::shared_ptr<Parser>(new Parser(&tokens));
     MalwrAnalyzer malwrAnalyzer(parserPtr);
-    malwrAnalyzer.buildHtmlDocumentTree();
-    malwrAnalyzer.findMalwrDTOComponents();
+//    malwrAnalyzer.buildHtmlDocumentTree();
+//    malwrAnalyzer.findMalwrDTOComponents();
+    malwrAnalyzer.runMalwrAnalyzer(argv);
 
 
     return 0;

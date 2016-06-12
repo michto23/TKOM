@@ -164,16 +164,16 @@ std::shared_ptr<Token> Parser::nextToken(bool isPossibleEnd){
  * Search component with given tag token
  * @return list of found components
  */
-std::vector<std::shared_ptr<Component>> findComponents(std::shared_ptr<Component> component, Token startTag){
+std::vector<std::shared_ptr<Component>> Parser::findComponents(std::shared_ptr<Component> component, Token startTag){
 
     std::vector<std::shared_ptr<Component>> found;
     if (component.get()->getStartTag() == NULL){
-        std::cout << " tekst to " << component.get()->getText().get()->getValue() << std::endl;
+//        std::cout << " tekst to " << component.get()->getText().get()->getValue() << std::endl;
         return found;
     }
     else {
-        std::cout << component.get()->getStartTag().get()->getValue() << " ";
-        std::cout << component.get()->getComponents().size() << std::endl;
+//        std::cout << component.get()->getStartTag().get()->getValue() << " ";
+//        std::cout << component.get()->getComponents().size() << std::endl;
     }
     if (component.get()->getStartTag().get()->getValue() == startTag.getValue() && component.get()->getStartTag().get()->getTokenType() == startTag.getTokenType()){
         found.push_back(component);
