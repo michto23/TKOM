@@ -19,6 +19,10 @@ std::shared_ptr<MalwrDTO> MalwrAnalyzer::createMalwrDTO (std::shared_ptr<Compone
 
     for (int i = 0; i < trComponent.get()->getComponents().size(); ++i) {
 
+        if (trComponent.get()->getComponents().size() != 5){
+            throw PerrorException( "ERROR STRUKTURY KODU ANALIZY MALWR.COM \n");
+        }
+
         std::shared_ptr<Component> current = trComponent.get()->getComponents().at(i);
 
         if (i == 0){
@@ -94,6 +98,4 @@ void MalwrAnalyzer::runMalwrAnalyzer(char **argv){
 
     outputJson << "]";
     outputJson.close();
-
-
 }
