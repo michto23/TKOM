@@ -5,8 +5,6 @@
 #ifndef TKOM_MALWRANALYZER_H
 #define TKOM_MALWRANALYZER_H
 #define TR_TOKEN_VALUE "<tr"
-#define OUTPUT_JSON_FILE "outputJson.json"
-
 
 #include <memory>
 #include <vector>

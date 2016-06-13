@@ -20,7 +20,7 @@ std::shared_ptr<MalwrDTO> MalwrAnalyzer::createMalwrDTO (std::shared_ptr<Compone
     for (int i = 0; i < trComponent.get()->getComponents().size(); ++i) {
 
         if (trComponent.get()->getComponents().size() != 5){
-            throw PerrorException( "ERROR STRUKTURY KODU ANALIZY MALWR.COM \n");
+            throw PerrorException( "Error of structure of malwr.com input file \n");
         }
 
         std::shared_ptr<Component> current = trComponent.get()->getComponents().at(i);
@@ -58,9 +58,9 @@ void MalwrAnalyzer::findMalwrDTOComponents() {
 
 std::vector<std::shared_ptr<MalwrDTO>> MalwrAnalyzer::filterMalwrDTOs(char **argv){
     std::vector<std::shared_ptr<MalwrDTO>> filteredMalwrDTOs;
-    std::string dateFromStr = argv[2];
-    std::string dateToStr = argv[3];
-    std::string fileType = argv[4];
+    std::string dateFromStr = argv[3];
+    std::string dateToStr = argv[4];
+    std::string fileType = argv[5];
 
     for (int i = 0; i < malwrDTOs.size(); ++i) {
         if (malwrDTOs.at(i).get()->dateGreaterThan(dateFromStr) && malwrDTOs.at(i).get()->dateLowerThan(dateToStr) && malwrDTOs.at(i).get()->fileTypeLike(fileType)){
@@ -80,13 +80,13 @@ void MalwrAnalyzer::runMalwrAnalyzer(char **argv){
         std::cout << e.getErrorMsg() << std::endl;
         exit(-1);
     }
-    std::cout << "Parser tree - sukces " << std::endl;
+    std::cout << "Parser tree - success " << std::endl;
 
     findMalwrDTOComponents();
     std::vector<std::shared_ptr<MalwrDTO>> filteredMalwrDTOs = filterMalwrDTOs(argv);
 
     std::ofstream outputJson;
-    outputJson.open (OUTPUT_JSON_FILE);
+    outputJson.open (argv[2]);
     outputJson << "[";
 
     for (int i = 0; i < filteredMalwrDTOs.size(); ++i) {

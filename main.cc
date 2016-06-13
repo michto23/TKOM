@@ -15,8 +15,12 @@
 
 int main( int argc, char** argv)
 {
-    if(argc != 5) {
-        printf("Za malo argumentow wejsciowych \n");
+    if(argc != 6) {
+        printf("Too few input arguments \n");
+        printf("Run as - ./Analizator <malwrInputFile> <outputJsonFile> <dateFrom> <dateTo> <fileType>\n");
+        printf("Date is - <day/month/year,hour:minute>\n");
+        printf("If no filter is needed - type 'none' in each position\n");
+        printf("E.g. './Analizator fileIn fileOut.json none none none' give all records without filtering\n");
         return -1;
     }
 
@@ -31,7 +35,7 @@ int main( int argc, char** argv)
         return -1;
     }
 
-    std::cout << "\nScanner - sukces" << std::endl;
+    std::cout << "\nScanner - success" << std::endl;
 
     std::shared_ptr<Parser> parserPtr = std::shared_ptr<Parser>(new Parser(&tokens));
 
@@ -45,7 +49,7 @@ int main( int argc, char** argv)
         return -1;
     }
 
-    std::cout << "Program - sukces \n" << std::endl;
+    std::cout << "Program - success \n" << std::endl;
 
     return 0;
 }

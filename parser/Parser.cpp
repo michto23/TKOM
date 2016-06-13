@@ -45,7 +45,7 @@ std::shared_ptr<HtmlDocument> Parser::buildHtmlDocumentTree(){
             return htmlDocument;
         }
     }
-    throw PerrorException( "ERROR PARSOWANIA w buildHtmlDocumentTree tokenu nr \n" + posCurrToken);
+    throw PerrorException( "Error in parsing token in buildHtmlDocumentTree nr \n" + posCurrToken);
 }
 
 std::shared_ptr<HtmlAttribute> Parser::buildHtmlAttribute(){
@@ -77,7 +77,7 @@ std::shared_ptr<HtmlAttribute> Parser::buildHtmlAttribute(){
             }
         }
     }
-    throw PerrorException( "ERROR PARSOWANIA tokenu w buildHtmlAttribute nr \n" + posCurrToken);
+    throw PerrorException( "Error in parsing token in buildHtmlAttribute nr \n" + posCurrToken);
 }
 
 std::shared_ptr<Component> Parser::buildComponent(){
@@ -136,7 +136,7 @@ std::shared_ptr<Component> Parser::buildComponent(){
             return retComponent; //tag samozamykajacy sie
         }
     }
-    throw PerrorException( "ERROR PARSOWANIA w buildComponent tokenu nr \n" + posCurrToken);
+    throw PerrorException( "Error in parsing token in buildComponent nr \n" + posCurrToken);
 }
 
 std::shared_ptr<Token> Parser::nextToken(bool isPossibleEnd){
@@ -150,7 +150,7 @@ std::shared_ptr<Token> Parser::nextToken(bool isPossibleEnd){
         return NULL;
     }
     else{
-        throw PerrorException( "ERROR PARSOWANIA. KONIEC TOKENOW W NIEODPOWIEDNIM MOMENCIE \n" + posCurrToken);
+        throw PerrorException( "Error in parsing. End of tokens at invalid moment \n" + posCurrToken);
     }
 }
 
